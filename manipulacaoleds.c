@@ -5,7 +5,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const uint LED = 11;
+#define LED 11
+#define BOTAO_A 5
+#define BOTAO_B 5
+volatile bool botaoA_pressionado = false;
+volatile bool botaoB_pressionado = false;
+
 
 void pisca_LED();
 void acao(int numero, PIO pio, uint sm);
@@ -19,6 +24,9 @@ void numero_6(PIO pio, uint sm);
 void numero_7(PIO pio, uint sm);
 void numero_8(PIO pio, uint sm);
 void numero_9(PIO pio, uint sm);
+void botao_b();
+void botao_b();
+
 
 int main()
 {
@@ -30,9 +38,43 @@ int main()
     gpio_init(LED);
     gpio_set_dir(LED, GPIO_OUT);
 
-    while (true) {
-        acao(contador, PIO pio, uint sm);
+    gpio_init(BOTAO_A);
+    gpio_set_dir(BOTAO_A, GPIO_IN);
+    gpio_pull_up(BOTAO_A);
 
+    gpio_init(BOTAO_B);
+    gpio_set_dir(BOTAO_B, GPIO_IN);
+    gpio_pull_up(BOTAO_B);
+
+    gpio_set_irq_enabled_with_callback(BOTAO_A, GPIO_IRQ_EDGE_FALL, true, botao_a);
+    gpio_set_irq_enabled_with_callback(BOTAO_B, GPIO_IRQ_EDGE_FALL, true, botao_b);
+
+    while (true) {
+
+        if (botaoA_pressionado && contador>0 && contador<=9) {
+            printf("Botão pressionado!\n");
+            contador--;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
+        }else if (botaoA_pressionado && contador==0 ){
+            printf("Botão pressionado!\n");
+            contador=9;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
+        }
+
+        if (botaoB_pressionado && contador>=0 && contador>9) {
+            printf("Botão pressionado!\n");
+            contador++;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
+        }else if (botaoB_pressionado && contador == 9){
+            printf("Botão pressionado!\n");
+            contador=0;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
+        }
+    
 
     }
 }
@@ -70,7 +112,7 @@ void acao(int numero, PIO pio, uint sm){
             numero_0(pio, sm);
             break;
         default:
-            /* code for unknown key */
+            numero_0(pio, sm);
             break;
     }
 }
@@ -215,3 +257,21 @@ void numero_9(PIO pio, uint sm){
    imprimir_desenho(nove, pio, sm);
 }
 
+
+void botao_a() {
+    static uint32_t ultimo_tempo = 0;
+    uint32_t tempo_atual = time_us_32();
+    if (tempo_atual - ultimo_tempo > 200000) { 
+        botaoA_pressionado = true; 
+    }
+    ultimo_tempo = tempo_atual;
+}
+
+void botao_b() {
+    static uint32_t ultimo_tempo = 0;
+    uint32_t tempo_atual = time_us_32();
+    if (tempo_atual - ultimo_tempo > 200000) { 
+        botaoB_pressionado = true; 
+    }
+    ultimo_tempo = tempo_atual;
+}
