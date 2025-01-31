@@ -56,31 +56,31 @@ int main()
     while (true) {
 
         struct repeating_timer timer;
-        add_repeating_timer_ms(-100, alterna_led, NULL, &timer);  
+        add_repeating_timer_ms(-100, toggle_led, NULL, &timer);  
 
 
         if (botaoA_pressionado && contador>0 && contador<=9) {
             printf("Botão pressionado!\n");
             contador--;
-            acao(contador, pio, sm);
-            botaoA_pressionado = false;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
         }else if (botaoA_pressionado && contador==0 ){
             printf("Botão pressionado!\n");
             contador=9;
-            acao(contador,pio, sm);
-            botaoA_pressionado = false;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
         }
 
         if (botaoB_pressionado && contador>=0 && contador>9) {
             printf("Botão pressionado!\n");
             contador++;
-            acao(contador, pio, sm);
-            botaoB_pressionado = false;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
         }else if (botaoB_pressionado && contador == 9){
             printf("Botão pressionado!\n");
             contador=0;
-            acao(contador, pio, sm);
-            botaoB_pressionado = false;
+            acao(contador, PIO pio, uint sm);
+            botao_pressionado = false;
         }
     
 
@@ -285,7 +285,7 @@ void botao_b() {
 }
 
 bool alterna_led(struct repeating_timer *t) {
-    gpio_put(LED, !gpio_get(LED));
+    gpio_put(LED_RED, !gpio_get(LED));
     return true;
 }
 
