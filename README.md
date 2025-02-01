@@ -43,6 +43,7 @@ Para colocar na placa, clique em "compile" e em "run" com a placa conectada.
 - Sistema operacional compatível com programas C.
 - Extensão Raspberry Pi Pico.
 - Wokwi configurado no VS Code.
+- Placa Raspberry Pi Pico - BitDogLab
 
 ## Desenvolvedora
 - [Evelyn Suzarte](https://github.com/Evelynsuzarte)
