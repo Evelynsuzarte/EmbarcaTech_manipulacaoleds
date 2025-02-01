@@ -30,9 +30,6 @@ Para compilar o programa, utilize um compilador C, gerando os arquivos `.uf2` e 
 1. Configure o ambiente de desenvolvimento para o Raspberry Pi Pico.
 2. Compile o código utilizando um compilador compatível.
 
-Segue um exemplo do botão de compilação:
-
-![botao compilador](photos_readme/compilador.png)
 
 ## Como executar
 Após a compilação, execute o simulador Wokwi clicando no arquivo `diagram.json`:
