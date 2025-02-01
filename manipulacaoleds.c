@@ -28,6 +28,7 @@ bool alterna_led(struct repeating_timer *t);
 
 
 int main(){
+
     PIO pio = pio0;
     uint sm = configurar_matriz(pio);
     struct repeating_timer timer;
@@ -45,20 +46,22 @@ int main(){
     gpio_set_dir(BOTAO_B, GPIO_IN);
     gpio_pull_up(BOTAO_B);
 
+    //função para iqr
     gpio_set_irq_enabled_with_callback(BOTAO_B, GPIO_IRQ_EDGE_RISE, true, &callback_botao);
-    gpio_set_irq_enabled_with_callback(BOTAO_A, GPIO_IRQ_EDGE_RISE, true, &callback_bo);
+    gpio_set_irq_enabled_with_callback(BOTAO_A, GPIO_IRQ_EDGE_RISE, true, &callback_botao);
     
-    
+    //função para a led funcionar independente 
     add_repeating_timer_ms(-100, alterna_led, NULL, &timer); 
 
     while (true) {
 
-        if (botaoA_pressionado){ 
+        // verificação para qual botão está pressionado
+        if (botaoA_pressionado){ //botao para subtrair
             if (contador>0){
                 contador--;
                 printf("Botão A!, %i\n",contador);
                 
-            }else{
+            }else{                  //como o limite é de 0 a 9, ao fazer 0-9 ele mostra 9
                 contador=9;
                 printf("Botão A!, %i\n",contador);
             }
@@ -66,12 +69,12 @@ int main(){
             botaoA_pressionado = false;
         }
 
-        else if (botaoB_pressionado) {
+        else if (botaoB_pressionado) {   //botao para somar
             if (contador <9 ){               
                 contador++;
                 printf("Botão B!, %i\n",contador);
             }else{                
-                contador=0;   
+                contador=0;         //como o limite é de 0 a 9, ao fazer 9+1 ele mostra 0
                 printf("Botão B!, %i\n",contador);
             }
             acao(contador, pio, sm);
@@ -81,6 +84,8 @@ int main(){
 
     
 }
+
+//selecao de numero para exibir
 void acao(int numero, PIO pio, uint sm){
     switch (numero){
         case 1:
@@ -119,6 +124,7 @@ void acao(int numero, PIO pio, uint sm){
     }
 }
 
+//exibição dos numeros na matriz
 void numero_0(PIO pio, uint sm){
     Matriz_leds_config zero = {
         //  Coluna 0          Coluna 1          Coluna 2          Coluna 3          Coluna 4
@@ -259,6 +265,7 @@ void numero_9(PIO pio, uint sm){
    imprimir_desenho(nove, pio, sm);
 }
 
+//função para indicar que botão está sendo apertado
 void callback_botao(uint gpio, uint32_t events){
     if (gpio == BOTAO_A) {
         botaoA_pressionado = true;
@@ -268,6 +275,7 @@ void callback_botao(uint gpio, uint32_t events){
     }
 }
 
+//piscar a led
 bool alterna_led(struct repeating_timer *t) {
     gpio_put(LED, !gpio_get(LED));
     return true;
