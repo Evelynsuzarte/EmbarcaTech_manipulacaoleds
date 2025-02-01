@@ -149,14 +149,12 @@
     [ "rgb23:VSS", "gnd5:GND", "green", [ "v0" ] ],
     [ "rgb24:VSS", "gnd5:GND", "green", [ "v0" ] ],
     [ "rgb25:VSS", "gnd5:GND", "green", [ "v0" ] ],
-    [ "rgb26:B", "pico:GP11", "green", [ "v0", "h88", "v-76.8" ] ],
-    [ "pico:GP12", "rgb26:G", "green", [ "h-38.4", "v57.64", "h-9.6" ] ],
-    [ "pico:GP13", "rgb26:R", "green", [ "h-28.8", "v67.24", "h-144", "v-9.6" ] ],
     [ "rgb26:COM", "pico:GND.4", "green", [ "v28.4", "h134.5", "v-67.2" ] ],
     [ "pico:GND.6", "btn2:1.l", "black", [ "h0" ] ],
     [ "pico:GND.5", "btn1:1.l", "black", [ "h67.51", "v0.04" ] ],
     [ "pico:GP5", "btn2:2.l", "green", [ "h-19.2", "v-86.4", "h124.8", "v163.2" ] ],
-    [ "pico:GP6", "btn1:2.l", "green", [ "h-38.4", "v-124.8", "h163.2", "v230.4", "h-9.6" ] ]
+    [ "pico:GP6", "btn1:2.l", "green", [ "h-38.4", "v-124.8", "h163.2", "v230.4", "h-9.6" ] ],
+    [ "rgb26:R", "pico:GP13", "green", [ "v0" ] ]
   ],
   "dependencies": {}
 }

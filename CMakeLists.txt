@@ -35,7 +35,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(manipulacaoleds manipulacaoleds.c )
+add_executable(manipulacaoleds manipulacaoleds.c matriz_leds.c)
 
 pico_set_program_name(manipulacaoleds "manipulacaoleds")
 pico_set_program_version(manipulacaoleds "0.1")
@@ -53,6 +53,7 @@ target_link_libraries(manipulacaoleds
 target_include_directories(manipulacaoleds PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}
 )
+target_include_directories(manipulacaoleds PRIVATE ${CMAKE_BINARY_DIR})
 
 # Add any user requested libraries
 target_link_libraries(manipulacaoleds 

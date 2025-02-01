@@ -45,7 +45,7 @@
         "iomanip": "c",
         "ostream": "c",
         "sstream": "c",
-        "pio_matrix.pio.h": "c",
+        "pio_matrix.pio.h.pio.h": "c",
         "pio.h": "c",
         "stdlib.h": "c",
         "timer.h": "c"
